@@ -1,17 +1,20 @@
 package com.dompurrr.kursachpe.repositories;
 
 import com.dompurrr.kursachpe.entities.Streamer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface StreamerRepo {
-    public Streamer find(Long id);
+@Repository
+public interface StreamerRepo extends JpaRepository<Streamer, Long> {
+    Streamer findByStreamerId(Long id);
 
-    public Streamer findByLogin(String login);
+    Streamer findByLogin(String login);
 
-    public List<Streamer> getAll();
+    Streamer findByName(String name);
 
-    public Boolean delete(Long id);
+    List<Streamer> findAll();
 
-    public Streamer save(Streamer streamer);
+    void deleteById(Long id);
 }

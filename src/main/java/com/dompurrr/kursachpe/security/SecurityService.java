@@ -35,7 +35,8 @@ public class SecurityService {
         UI.getCurrent().getPage().setLocation(LOGOUT_SUCCESS_URL);
         SecurityContextLogoutHandler logoutHandler = new SecurityContextLogoutHandler();
         logoutHandler.logout(
-                VaadinServletRequest.getCurrent().getHttpServletRequest(), null,
+                VaadinServletRequest.getCurrent().getHttpServletRequest(),
+                null,
                 null);
     }
 }

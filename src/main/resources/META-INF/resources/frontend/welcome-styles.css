@@ -1,0 +1,17 @@
+.influencer-button-background {
+    background-image: url("https://media.wired.com/photos/63a36ce8145a571e203e3a73/master/pass/The-Reign-of-the-Part-Time-Twitch-Streamer-Games-GettyImages-1404708615.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.5;
+    height: 50%;
+}
+
+.donator-button-background {
+    background-image: url("https://www.cheaptvs.co.uk/blog/wp-content/uploads/2020/12/Man-Watching-TV.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: 0.5;
+    height: 50%;
+}

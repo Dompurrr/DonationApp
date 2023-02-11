@@ -1,33 +1,27 @@
 package com.dompurrr.kursachpe.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Setter
 @Getter
 @AllArgsConstructor
+@Builder
+@EqualsAndHashCode(exclude = "donationId")
+@NoArgsConstructor
+@Entity
+@Table(name = "donation")
 public class Donation {
-    private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer donationId;
+    @Column(name = "recipient_id")
     private Long recipientId;
+    @Column(name = "amount")
     private Integer amount;
-    private String textMessage = "";
+    @Column(name = "message")
+    private String textMessage;
+    @Column(name = "sender_name")
     private String senderName;
-
-    public Donation(Integer id, Long recipientId, Integer amount, String senderName) {
-        this.id = id;
-        this.recipientId = recipientId;
-        this.amount = amount;
-        this.senderName = senderName;
-    }
-
-    @Override
-    public String toString() {
-        return "Donation{" +
-                "id = " + id + ", " +
-                "recipientId = " + recipientId + ", " +
-                "amount = " + amount + ", " +
-                "textMessage = " + textMessage + ", " +
-                "senderName = " + senderName + "}";
-    }
 }

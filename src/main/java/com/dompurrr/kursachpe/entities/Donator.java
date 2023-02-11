@@ -1,34 +1,25 @@
 package com.dompurrr.kursachpe.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
+@EqualsAndHashCode(exclude = "donatorId")
+@Entity
+@Table(name = "donator")
 public class Donator {
-    Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Long donatorId;
+    @Column(name = "has_account")
     Boolean hasAccount;
+    @Column(name = "name")
     String name;
+    @Column(name = "auth_id")
     Long auth_id;
-
-    public Donator(Long id, Boolean hasAccount, String name) {
-        this.id = id;
-        this.hasAccount = hasAccount;
-        this.hasAccount = false;
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return "Donator{" +
-                "id=" + id +
-                ", hasAccount=" + hasAccount +
-                ", name='" + name + '\'' +
-                ", auth_id=" + auth_id +
-                '}';
-    }
 }

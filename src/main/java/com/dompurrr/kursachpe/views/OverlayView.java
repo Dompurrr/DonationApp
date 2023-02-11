@@ -1,8 +1,6 @@
 package com.dompurrr.kursachpe.views;
 
 import com.dompurrr.kursachpe.entities.Donation;
-import com.dompurrr.kursachpe.entities.Donator;
-import com.dompurrr.kursachpe.entities.Streamer;
 import com.dompurrr.kursachpe.repositories.DonationRepo;
 import com.dompurrr.kursachpe.repositories.StreamerRepo;
 import com.dompurrr.kursachpe.security.SecurityService;
@@ -12,14 +10,9 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEvent;
-import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import javax.annotation.security.RolesAllowed;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -39,7 +32,7 @@ public class OverlayView extends Div {
         this.securityService = securityService;
         this.donationRepo = donationRepo;
         this.streamerRepo = streamerRepo;
-        this.id = streamerRepo.findByLogin(securityService.getUsername()).getId();
+        this.id = streamerRepo.findByLogin(securityService.getUsername()).getStreamerId();
     }
 
     @Override
@@ -73,14 +66,14 @@ public class OverlayView extends Div {
             this.donationRepo = donationRepo;
             this.id = id;
             this.ui = ui;
-            donations = donationRepo.find(id);
+            donations = donationRepo.findByRecipientId(id);
         }
 
         @Override
         public void run() {
             while (true) {
                 try {
-                    List<Donation> tmp = donationRepo.find(id);
+                    List<Donation> tmp = donationRepo.findByRecipientId(id);
                     List<Donation> difference;
                     if (!tmp.equals(donations)) {
                         difference = tmp.stream()
@@ -89,7 +82,7 @@ public class OverlayView extends Div {
                         donations = tmp;
                         showDonations(difference);
                     }
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                 }catch (InterruptedException e) {
                     e.printStackTrace();
                 }

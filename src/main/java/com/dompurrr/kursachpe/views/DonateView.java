@@ -9,6 +9,8 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,31 +25,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 @AnonymousAllowed
 public class DonateView extends Div implements HasUrlParameter<Integer> {
     @Autowired
-    StreamerRepo streamerRepo;
+    private StreamerRepo streamerRepo;
     @Autowired
-    DonationRepo donationRepo;
+    private DonationRepo donationRepo;
+    private Div container;
+
+    public DonateView(StreamerRepo streamerRepo){
+        this.streamerRepo=streamerRepo;
+        this.setClassName("donation-app");
+        this.setHeight("100%");
+        container = new Div();
+        container.setMinHeight("100%");
+        this.add(container);
+    }
+
+    @Override
+    public void setParameter(BeforeEvent event, @OptionalParameter Integer parameter) {
+        if (parameter == null){
+            constructEmpt();
+        }
+        else {
+            constructPage(Long.valueOf(parameter));
+        }
+    }
 
     private void constructEmpt(){
         this.removeAll();
         VerticalLayout layout = new VerticalLayout();
-        H2 p = new H2();
-        p.setText("Введите ID ведущего:");
+        H2 helpLabel = new H2();
+        helpLabel.setText("Введите ID ведущего:");
+        // Не делать проверку валидности -> в будущем никнейм в виде параметра, а не ID
         TextField inpId = new TextField("Id ведущего");
         inpId.setClearButtonVisible(true);
         Button searchBtn = new Button("Найти");
+
         searchBtn.addClickListener(e -> {
             String StrId = inpId.getValue();
-            Streamer tmp = streamerRepo.find(Long.parseLong(StrId));
+            Streamer tmp = streamerRepo.findByStreamerId(Long.parseLong(StrId));
             if (tmp == null){
-                H2 h = new H2("ID не найдено");
-                layout.add(h);
+                Notification notification = new Notification();
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
+                notification.setText("ID не найдено");
+                notification.setDuration(5000);
+                notification.setPosition(Notification.Position.BOTTOM_STRETCH);
+                notification.open();
             }
             else{
                 searchBtn.getUI().ifPresent(ui -> ui.navigate("donate/"+StrId));
             }
         });
 
-        layout.add(p, inpId, searchBtn);
+        layout.add(helpLabel, inpId, searchBtn);
         this.add(layout);
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
     }
@@ -56,7 +84,7 @@ public class DonateView extends Div implements HasUrlParameter<Integer> {
         VerticalLayout layout = new VerticalLayout();
         H2 h = new H2();
 
-        Streamer foundRes = streamerRepo.find(id);
+        Streamer foundRes = streamerRepo.findByStreamerId(id);
         this.removeAll();
         if (foundRes == null) {
             h.setText("Неверный ID!");
@@ -96,7 +124,7 @@ public class DonateView extends Div implements HasUrlParameter<Integer> {
                     String msgTxt = messageText.getValue();
                     Donation dnt;
                     if (msgTxt.equals(""))
-                        dnt = new Donation(null, id, t, senderName.getValue());
+                        dnt = new Donation(null, id, t, senderName.getValue(), "");
                     else
                         dnt = new Donation(null, id, t, msgTxt, senderName.getValue());
                     donationRepo.save(dnt);
@@ -116,18 +144,5 @@ public class DonateView extends Div implements HasUrlParameter<Integer> {
 
         layout.setAlignItems(FlexComponent.Alignment.CENTER);
         this.add(layout);
-    }
-    public DonateView(StreamerRepo streamerRepo){
-        this.streamerRepo=streamerRepo;
-    }
-
-    @Override
-    public void setParameter(BeforeEvent event, @OptionalParameter Integer parameter) {
-        if (parameter == null){
-            constructEmpt();
-        }
-        else {
-            constructPage(Long.valueOf(parameter));
-        }
     }
 }

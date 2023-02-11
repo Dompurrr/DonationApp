@@ -1,11 +1,10 @@
 package com.dompurrr.kursachpe.views;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
 @PageTitle("Настройки")
@@ -14,7 +13,7 @@ import javax.annotation.security.RolesAllowed;
 public class SettingsView extends VerticalLayout {
 
     public SettingsView(){
-        Button button = new Button("Fix everything!");
-        add(button);
+        H1 wip = new H1("Nothing here, sorry :<");
+        add(wip);
     }
 }

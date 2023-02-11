@@ -43,7 +43,7 @@ public class DonationListView extends VerticalLayout {
         grid.addColumn(Donation::getTextMessage).setHeader("Сообщение");
         String usrnm = securityService.getUsername();
         Streamer tmp = streamerRepo.findByLogin(usrnm);
-        List<Donation> donationList = donationRepo.find(tmp.getId());
+        List<Donation> donationList = donationRepo.findByRecipientId(tmp.getStreamerId());
         grid.setItems(donationList);
         add(grid);
         // EditForm

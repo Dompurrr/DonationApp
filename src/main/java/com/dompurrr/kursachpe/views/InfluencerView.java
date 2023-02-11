@@ -1,22 +1,18 @@
 package com.dompurrr.kursachpe.views;
 
 import com.dompurrr.kursachpe.repositories.StreamerRepo;
-import com.dompurrr.kursachpe.repositories.StreamerRepoImpl;
 import com.dompurrr.kursachpe.security.SecurityService;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.*;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.tabs.*;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
 
 @Route("influencer")
@@ -61,7 +57,7 @@ public class InfluencerView extends AppLayout {
         Tabs tabs = new Tabs();
         tabs.add(createTab(VaadinIcon.LIST, "Пожертвования"),
                 createTab(VaadinIcon.PIE_BAR_CHART, "Аналитика"),
-                createTab(VaadinIcon.MONEY, "Выплаты"),
+                createTab(VaadinIcon.INFO, "Информация"),
                 createTab(VaadinIcon.COG, "Настройки"));
         tabs.setOrientation(Tabs.Orientation.VERTICAL);
         return tabs;
@@ -80,8 +76,8 @@ public class InfluencerView extends AppLayout {
             link.setRoute(DonationListView.class);
         if (viewName.equals("Аналитика"))
             link.setRoute(AnalyticsView.class);
-        if (viewName.equals("Выплаты"))
-            link.setRoute(PayView.class);
+        if (viewName.equals("Информация"))
+            link.setRoute(InfoView.class);
         if (viewName.equals("Настройки"))
             link.setRoute(SettingsView.class);
         link.setTabIndex(-1);

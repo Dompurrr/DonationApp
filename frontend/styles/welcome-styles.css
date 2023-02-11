@@ -1,0 +1,30 @@
+.left-button {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("https://media.wired.com/photos/63a36ce8145a571e203e3a73/master/pass/The-Reign-of-the-Part-Time-Twitch-Streamer-Games-GettyImages-1404708615.jpg");
+    background-size: cover;
+    width: 50%;
+    height: 100%;
+    font-size: xx-large;
+}
+
+.right-button {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.5)), url("https://www.cheaptvs.co.uk/blog/wp-content/uploads/2020/12/Man-Watching-TV.jpg");
+    background-size: cover;
+    width: 50%;
+    height: 100%;
+    font-size: xx-large;
+}
+
+.left-button,
+.right-button {
+    background-position: center;
+}
+
+.left-button {
+    float: left;
+}
+
+.right-button {
+    float: right;
+}
